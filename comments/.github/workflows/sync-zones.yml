@@ -1,0 +1,141 @@
+name: Sync Zones to Issues
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *" # every hour
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # so it can push issueids.json
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch zones.json
+        run: |
+          curl -s https://raw.githubusercontent.com/gn-math/assets/refs/heads/main/zones.json > zones.json
+
+      - name: Sync issues
+        id: sync
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+
+            // Helper: wait
+            const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+            // Helper: safe API call with retry on rate-limit
+            async function safeApiCall(fn, params) {
+              while (true) {
+                try {
+                  return await fn(params);
+                } catch (error) {
+                  if (error.status === 403 && error.response?.headers["x-ratelimit-reset"]) {
+                    const reset = parseInt(error.response.headers["x-ratelimit-reset"], 10) * 1000;
+                    const now = Date.now();
+                    const waitMs = reset - now + 5000; // add 5s buffer
+                    if (waitMs > 0) {
+                      console.log(`⏳ Rate limit hit, waiting ${Math.ceil(waitMs / 1000)}s...`);
+                      await sleep(waitMs);
+                      continue;
+                    }
+                  }
+                  throw error; // other errors bubble up
+                }
+              }
+            }
+
+            // Load zones.json and filter out id=0 and id=-1
+            const zones = JSON.parse(fs.readFileSync("zones.json", "utf8")).filter(z => z.id !== 0 && z.id !== -1);
+
+            // Load issueids.json (if exists)
+            let issueMap = {};
+            if (fs.existsSync("issueids.json")) {
+              issueMap = JSON.parse(fs.readFileSync("issueids.json", "utf8"));
+            }
+            if (!issueMap["0"]) issueMap["0"] = "0"; // Always present
+
+            const workflowBot = "github-actions[bot]";
+            const validTitles = zones.map(z => z.name);
+
+            // Create or update mapping for each zone
+            for (const zone of zones) {
+              const title = zone.name;
+              const existingIssueId = issueMap[zone.id];
+
+              let issue;
+              if (existingIssueId) {
+                try {
+                  const { data } = await safeApiCall(github.rest.issues.get, {
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: existingIssueId
+                  });
+                  issue = data;
+                } catch (e) {
+                  console.log(`⚠️ Issue #${existingIssueId} not found for zone ${zone.id}, will recreate.`);
+                }
+              }
+
+              if (!issue) {
+                const body = `Name: ${zone.name}\nID: ${zone.id}\nAuthor: ${zone.author}\nAuthor Link: ${zone.authorLink}`;
+                console.log(`Creating issue for: ${title}`);
+                const { data: newIssue } = await safeApiCall(github.rest.issues.create, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title,
+                  body
+                });
+                issue = newIssue;
+                await sleep(3000);
+              }
+
+              issueMap[zone.id] = String(issue.number);
+            }
+
+            // Check issues in issueids.json and close invalid ones
+            for (const [zoneId, issueId] of Object.entries(issueMap)) {
+              if (zoneId === "0") continue; // skip reserved
+
+              try {
+                const { data: issue } = await safeApiCall(github.rest.issues.get, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueId
+                });
+
+                if (!validTitles.includes(issue.title) && issue.state === "open") {
+                  if (issue.user.login !== workflowBot) {
+                    console.log(`Closing unauthorized issue: #${issue.number} - ${issue.title}`);
+                    await safeApiCall(github.rest.issues.update, {
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: issue.number,
+                      state: "closed"
+                    });
+                    await sleep(3000);
+                  }
+                }
+              } catch (e) {
+                console.log(`⚠️ Could not fetch issue #${issueId}, skipping cleanup.`);
+              }
+            }
+
+            // Write updated issueids.json
+            fs.writeFileSync("issueids.json", JSON.stringify(issueMap, null, 4));
+            console.log("✅ Updated issueids.json");
+
+      - name: Commit issueids.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add issueids.json
+          git commit -m "Update issueids.json [skip ci]" || echo "No changes to commit"
+          git push

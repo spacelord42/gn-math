@@ -1,0 +1,17 @@
+name: Notify downstream
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send repository dispatch
+        run: |
+          curl -X POST https://api.github.com/repos/freebuisness/assets/dispatches \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
+            -d '{"event_type":"sync-assets"}'

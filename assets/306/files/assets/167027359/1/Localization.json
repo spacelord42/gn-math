@@ -1,0 +1,16 @@
+{
+    "header": {
+        "version": 1
+    },
+    "data": [
+        {
+            "info": {
+                "locale": "en-US"
+            },
+            "messages": {
+                "Leaders": "Leaders",
+                "Upgrade Ship" : "Upgrade Ship"
+            }
+        }
+    ]
+}

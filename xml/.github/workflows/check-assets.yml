@@ -1,0 +1,47 @@
+name: Check gn-math/assets commits
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" # every 10 minutes
+  workflow_dispatch: # allow manual run
+
+jobs:
+  check-commits:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get latest commit SHA from API
+        id: get_sha
+        run: |
+          latest_sha=$(curl -s https://api.github.com/repos/gn-math/assets/commits | jq -r '.[0].sha')
+          echo "latest_sha=$latest_sha" >> $GITHUB_ENV
+
+      - name: Compare with sha.txt
+        id: compare
+        run: |
+          if [ -f sha.txt ]; then
+            current_sha=$(cat sha.txt)
+          else
+            current_sha=""
+          fi
+
+          if [ "$current_sha" = "$latest_sha" ]; then
+            echo "No update needed"
+            echo "update_needed=false" >> $GITHUB_ENV
+          else
+            echo "Update needed"
+            echo "$latest_sha" > sha.txt
+            echo "update_needed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit updated sha.txt
+        if: env.update_needed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sha.txt
+          git commit -m "Update sha.txt to $latest_sha"
+          git push

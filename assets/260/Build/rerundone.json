@@ -1,0 +1,16 @@
+{
+"companyName": "Dani",
+"productName": "RERUN",
+"productVersion": "0.1",
+"dataUrl": "rerundone.data.unityweb",
+"wasmCodeUrl": "rerundone.wasm.code.unityweb",
+"wasmFrameworkUrl": "rerundone.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"backgroundUrl": "rerundone.jpg",
+"splashScreenStyle": "Dark",
+"backgroundColor": "#FFFFFF",
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.3.0f6"
+}
