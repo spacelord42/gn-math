@@ -1,0 +1,66 @@
+/*car data array that stores market car listings by Burak Ersin - emolingo games */
+const allCars = [
+    {
+        carID: 0,
+        carPriceType: "free",
+        price: 0,
+        watchedAds: 0,
+        hasCar: true,
+    },
+    {
+        carID: 1,
+        carPriceType: "coin",
+        price: 50,
+        watchedAds: 0,
+        hasCar: false,
+    },
+    {
+        carID: 2,
+        carPriceType: "ads",
+        price: 1,
+        watchedAds: 0,
+        hasCar: false,
+    },
+    {
+        carID: 3,
+        carPriceType: "coin",
+        price: 100,
+        watchedAds: 0,
+        hasCar: false,
+    },
+    {
+        carID: 4,
+        carPriceType: "coin",
+        price: 150,
+        watchedAds: 0,
+        hasCar: false,
+    },
+    {
+        carID: 5,
+        carPriceType: "ads",
+        price: 3,
+        watchedAds: 0,
+        hasCar: false,
+    },
+    {
+        carID: 6,
+        carPriceType: "coin",
+        price: 250,
+        watchedAds: 0,
+        hasCar: false,
+    },
+    {
+        carID: 7,
+        carPriceType: "ads",
+        price: 5,
+        watchedAds: 0,
+        hasCar: false,
+    },
+    {
+        carID: 8,
+        carPriceType: "flag",
+        price: 100,
+        watchedAds: 0,
+        hasCar: false,
+    },
+];
