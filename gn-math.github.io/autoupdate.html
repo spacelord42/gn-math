@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading GN-Math…</title>
+</head>
+<body>
+  <p>Loading GN-Math…</p>
+  <script>
+    (async () => {
+      const source = "https://cdn.jsdelivr.net/gh/spacelord42/gn-math@main/singlefile.html";
+
+      try {
+        const response = await fetch(`${source}?t=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Request failed: ${response.status}`);
+        }
+
+        const html = await response.text();
+        document.open();
+        document.write(html);
+        document.close();
+      } catch (error) {
+        console.error("Unable to load GN-Math:", error);
+        document.body.innerHTML = "<p>Unable to load GN-Math. Please try again later.</p>";
+      }
+    })();
+  </script>
+</body>
+</html>
