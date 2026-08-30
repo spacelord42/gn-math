@@ -991,14 +991,6 @@
     ]
   },
   {
-    "id": 114,
-    "name": "2048",
-    "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/114.png",
-    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/114.html",
-    "author": "Gabriele Cirulli",
-    "authorLink": "https://github.com/gabrielecirulli"
-  },
-  {
     "id": 115,
     "name": "8 Ball Pool",
     "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/115.png",
@@ -3181,14 +3173,6 @@
     "url": "https://fastly.jsdelivr.net/gh/wnasmile/LAMAR@4e2ced5ad916836e4d6bc31dab3b9c660b51d678/stickman-golf/",
     "author": "NoodleCake",
     "authorLink": "https://noodlecake.com"
-  },
-  {
-    "id": 375,
-    "name": "2048 Merge Run",
-    "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/375.png",
-    "url": "https://fastly.jsdelivr.net/gh/axo323lotl-bit/elitecomposite@main/2048-merge-run/",
-    "author": "Yandex",
-    "authorLink": "https://yandex.com/games"
   },
   {
     "id": 376,
