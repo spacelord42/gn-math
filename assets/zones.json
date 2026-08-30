@@ -994,7 +994,7 @@
     "id": 114,
     "name": "2048",
     "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/114.png",
-    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/114-f.html",
+    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/114.html",
     "author": "Gabriele Cirulli",
     "authorLink": "https://github.com/gabrielecirulli"
   },
@@ -2257,7 +2257,7 @@
     "id": 266,
     "name": "Speed Stars",
     "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/266.png",
-    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/266-a.html",
+    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/266.html",
     "author": "Luke Doukakis",
     "authorLink": "https://store.steampowered.com/app/1482700/Speed_Stars/",
     "special": [
@@ -3905,7 +3905,7 @@
     "id": 461,
     "name": "Slither.io",
     "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/461.png",
-    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/461.html",
+    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/461-f.html",
     "author": "slither.io",
     "authorLink": "http://slither.com/io"
   },
@@ -5284,17 +5284,6 @@
     "url": "https://fastly.jsdelivr.net/gh/bubbls/UGS-Assets@main/toy-rider/",
     "author": "CrazyGames",
     "authorLink": "https://www.crazygames.com/"
-  },
-  {
-    "id": 615,
-    "name": "Friday Night Funkin Vs. Dave and Bambi v3",
-    "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/615.png",
-    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/615.html-a",
-    "author": "Dave and Bambi team",
-    "authorLink": "https://gamebanana.com/mods/43201",
-    "special": [
-      "fnf"
-    ]
   },
   {
     "id": 616,
