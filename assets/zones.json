@@ -6428,18 +6428,7 @@
     "author": "caijiqaq",
     "authorLink": "https://caijiqaq.github.io/LAST-BREATH/"
   },
-  {
-    "id": 732,
-    "name": "64 in 1 NES",
-    "cover": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/covers/732.png",
-    "url": "https://fastly.jsdelivr.net/gh/spacelord42/gn-math@main/html/732.html",
-    "author": "idk",
-    "authorLink": "https://www.doperoms.org/roms/nintendo_nes/64-in-1%2520%255Bp1%255D.zip.html/630301/64-in-1%20[p1].zip.html",
-    "special": [
-      "emulator",
-      "nes"
-    ]
-  },
+
   {
     "id": 733,
     "name": "Tetris",
